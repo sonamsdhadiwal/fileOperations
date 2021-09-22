@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fsreact-dev-193136-authRole",
+      "UnauthRoleArn": "arn:aws:iam::189203327285:role/amplify-fsreact-dev-193136-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::189203327285:role/amplify-fsreact-dev-193136-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-fsreact-dev-193136-deployment",
+      "UnauthRoleName": "amplify-fsreact-dev-193136-unauthRole",
+      "StackName": "amplify-fsreact-dev-193136",
+      "StackId": "arn:aws:cloudformation:us-east-1:189203327285:stack/amplify-fsreact-dev-193136/71e7ff20-1b3c-11ec-839b-0e4b061813b3",
+      "AmplifyAppId": "d36zqwvhfljgz5"
+    },
+    "categories": {
+      "function": {
+        "mypythonfunction": {
+          "deploymentBucketName": "amplify-fsreact-dev-193136-deployment",
+          "s3Key": "amplify-builds/mypythonfunction-44775932576142315167-build.zip"
+        }
+      }
+    }
+  }
+}
