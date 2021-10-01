@@ -5,6 +5,8 @@ export default function Navbar() {
     <>
       <nav className="navbar__head">
         <a href="/">Home</a>
+        <a href="/about">About</a> 
+        <a href="/contact">Contact</a>
       </nav>
      
     </>
