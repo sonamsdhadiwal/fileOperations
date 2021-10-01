@@ -15,7 +15,7 @@
       "function": {
         "mypythonfunction": {
           "deploymentBucketName": "amplify-fsreact-dev-193136-deployment",
-          "s3Key": "amplify-builds/mypythonfunction-44775932576142315167-build.zip"
+          "s3Key": "amplify-builds/mypythonfunction-424270444430506b3933-build.zip"
         }
       }
     }
