@@ -5,6 +5,9 @@ import { API } from 'aws-amplify';
 import logo from './logo.svg';
 import './App.css';
 
+import Routes from './Routes'
+import Navbar from './Navbar'
+
 function App() {
   const [merge, setMerge] = useState(null)
   async function fetchMerge() {
@@ -17,6 +20,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+      <Navbar />
+      <Routes />
         <img src={logo} className="App-logo" alt="logo" />
         <h1>{merge}</h1>
         <a
