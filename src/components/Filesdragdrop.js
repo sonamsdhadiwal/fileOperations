@@ -7,10 +7,8 @@ import ModalLoadingAlert from './ModalLoadingAlert';
 import PDFProvider from './PdfProvider';
 import { saveSync } from 'save-file';
 
-class Filesdragdrop extends Component {
-	constructor() {
-		super();
-	this.state = {
+class FilesDragDrop extends Component {
+	state = {
 		files: [],
 		hasFiles: false,
 		modalOpen: false,
@@ -18,10 +16,8 @@ class Filesdragdrop extends Component {
 		modalMsg: {
 			err: null,
 			success: null
-		},
-		testValue: true
+		}
 	}
-}
 
 	onFilesChange = (files) => {
 		console.log("files", files);
@@ -75,7 +71,6 @@ class Filesdragdrop extends Component {
 			console.log("[LOG] Starting merge...")
 		})
 
-		console.log("files", this.state.files);
 		PDFProvider.mergeBetweenPDF(this.state.files)
 			.then((res) => {
 				// console.log(res)
@@ -135,28 +130,6 @@ class Filesdragdrop extends Component {
 			.finally(() => this.filesRemoveAll())
 	}
 
-	handleSubmit = () => {
-		let eventData;
-		this.setState({
-			files: this.state.files,
-			hasFiles: false,
-			modalOpen: true,
-			modalLoading: true
-		}, () => {
-			// this.refs.modal.handleOpen()
-			console.log("[LOG] Starting merge...")
-		})
-		console.log("Handle submit",this.state);
-
-	
-		// e.preventDefault();
-		const data = { 'name': 'value',
-					   'file1PDF': this.state.files };
-		
-		console.log('value');
-		
-	  }
-
 	render() {
 		const { classes } = this.props;
 		console.log("props", this.props);
@@ -165,7 +138,9 @@ class Filesdragdrop extends Component {
 			<div className="files">
 				<Grid container spacing={10} justify="center" className={classes.gridContainer}>
 					<Grid item className={classes.dropFilesGridZone}>
+
 						<Files
+
 							ref='files'
 							className={classes.dropFilesZone}
 							onChange={this.onFilesChange}
@@ -220,34 +195,6 @@ class Filesdragdrop extends Component {
 							onClick={this.startMerge}>
 							   SUBMIT
 						</Button>
-						<Button
-						onClick = {async () => {
-							const movie = { 'name': 'Sonam'}
-							const response = await fetch('/merge', {
-								method: 'POST',
-								headers: {
-									'Content-Type': 'application/json'
-								},
-								data: 'test',
-								// body: JSON.stringify(this.state.value)
-								body: {
-									'lastname': 'Dhadiwal'
-								}
-							})
-
-							if(response.ok) {
-								console.log("response worked")
-							}
-							}
-						}>Test</Button>
-
-
-
-
-						<form action="" onSubmit={this.handleSubmit}>
-        
-        <button> submit </button>
-      </form>
 					</Grid>
 					<Grid item>
 						<Button variant="outlined" color="secondary" onClick={this.filesClearAndRemoveAll} 
@@ -300,4 +247,4 @@ const styles = theme => ({
 	}
 });
 
-export default withStyles(styles, { name: 'MuiFilesDragDrop' })(Filesdragdrop);
+export default withStyles(styles, { name: 'MuiFilesDragDrop' })(FilesDragDrop);
