@@ -1,0 +1,10 @@
+.dropFilesZone {
+    padding: '2em';
+    border: '2px dashed rgba(0, 0, 0, .1)';
+    color: 'rgba(0, 0, 0, .4)';
+    width: '100%';
+    display: 'flex';
+    flex-wrap: 'wrap';
+    box-sizing: 'border-box';
+    text-align: 'center';
+}
