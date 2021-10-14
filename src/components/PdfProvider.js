@@ -15,12 +15,15 @@ let returnObj = { pdfFile: null, pdfNotMergedList: [] }
 
 		// Get all file URLs into a list using Promises and fetch API
 		pdfFileList.forEach((pdfFile) => {
-			// console.log(pdfFile)
+			console.log(pdfFile)
 			pdfFilePromiseArrayBufferList.push(
 				fetch(URL.createObjectURL(pdfFile))
-					.then(res => res.arrayBuffer())
+					.then(res => 
+						res.arrayBuffer())
 			)
 		})
+
+		console.log("pdfFilePromiseArrayBufferList",pdfFilePromiseArrayBufferList)
 
 		return Promise
 			.all(pdfFilePromiseArrayBufferList)
