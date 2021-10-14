@@ -1,40 +1,30 @@
-import React, { useState, useEffect } from 'react';
-
-import { API } from 'aws-amplify';
-
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router } from "react-router-dom";
+import { NavigationBar } from './components/NavigationBar';
+import RoutesPage from './components/RoutesPage';
+import ReactGA from 'react-ga';
 
-import Routes from './Routes'
-import Navbar from './Navbar'
 
+function initializeAnalytics() {
+  ReactGA.initialize('UA-204383892-1');
+  ReactGA.pageview('/PdfOperations');
+}
+/**
+ * Here LandingPage is a default export and not a named export
+ *  as it is export default from landing page
+ */
 function App() {
-  const [merge, setMerge] = useState(null)
-  async function fetchMerge() {
-    const apiData = await API.get('mypythonapi','/merge')
-    setMerge(apiData.message)
-  }
-  useEffect(() => {
-    fetchMerge()
-  },[])
+  initializeAnalytics();
   return (
-    <div className="App">
-      <header className="App-header">
-      <Navbar />
-      <Routes />
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>{merge}</h1>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  <React.Fragment>
+  <Router>
+    <NavigationBar />
+    <RoutesPage />
+  </Router>
+</React.Fragment>
+  )
 }
 
 export default App;
