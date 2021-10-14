@@ -7,6 +7,6 @@ require("babel-register")({
   
   (
       new Sitemap(router)
-          .build('https://master.d36zqwvhfljgz5.amplifyapp.com')
+          .build('https://filetwistter.com')
           .save('./public/sitemap.xml')
   );

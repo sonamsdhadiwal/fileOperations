@@ -3,15 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Files from 'react-files';
-import ModalLoadingAlert from '../ModalLoadingAlert';
-import PDFProvider from '../../lib/provider/pdfSplitProvider';
-import { saveSync } from 'save-file'
-import { Typography } from '@material-ui/core';
+import ModalLoadingAlert from './ModalLoadingAlert';
+import PDFProvider from './PdfProvider';
+import { saveSync } from 'save-file';
 
 class FilesDragDrop extends Component {
-	constructor() {
-		super();
-	this.state = {
+	state = {
 		files: [],
 		hasFiles: false,
 		modalOpen: false,
@@ -19,14 +16,8 @@ class FilesDragDrop extends Component {
 		modalMsg: {
 			err: null,
 			success: null
-		},
-		value1: '',
-		value2: '',
-	};
-	this.handleChange = this.handleChange.bind(this);
-	this.handleChangeToPage = this.handleChangeToPage.bind(this);
-	this.handleSubmit = this.handleSubmit.bind(this);
-}
+		}
+	}
 
 	onFilesChange = (files) => {
 		console.log("files", files);
@@ -80,9 +71,9 @@ class FilesDragDrop extends Component {
 			console.log("[LOG] Starting merge...")
 		})
 
-		PDFProvider.splitBetweenPdf(this.state.files,this.state.value1,this.state.value2)
+		PDFProvider.mergeBetweenPDF(this.state.files)
 			.then((res) => {
-				console.log("result files", res);
+				// console.log(res)
 				if (res && res.hasOwnProperty("pdfFile")) {
 					if (res.pdfFile) {
 						if (res.pdfNotMergedList.length !== this.state.files.length) {
@@ -108,7 +99,7 @@ class FilesDragDrop extends Component {
 							}, () => { console.log("[LOG] Modal closed.") })
 						}
 						else {
-							tempMsg = "Split successfull. Please check download folder!!"
+							tempMsg = "Merge totally successfull. Please check download folder!!"
 							console.log("[LOG] " + tempMsg)
 							this.setState({
 								modalOpen: true,
@@ -139,32 +130,24 @@ class FilesDragDrop extends Component {
 			.finally(() => this.filesRemoveAll())
 	}
 
-	handleChange(event) {
-		this.setState({value1: event.target.value});
-	}
-
-	handleChangeToPage(event) {
-		this.setState({value2: event.target.value});
-	}
-
-	handleSubmit(event) {
-		event.preventDefault();
-	}
-
 	render() {
 		const { classes } = this.props;
-		//console.log("props", this.props);
+		console.log("props", this.props);
+
 		return (
 			<div className="files">
 				<Grid container spacing={10} justify="center" className={classes.gridContainer}>
 					<Grid item className={classes.dropFilesGridZone}>
+
 						<Files
+
 							ref='files'
 							className={classes.dropFilesZone}
 							onChange={this.onFilesChange}
 							onError={this.onFilesError}
 							accepts={['.pdf']}
-							maxFiles={1}
+							multiple
+							maxFiles={1000}
 							maxFileSize={10000000}
 							minFileSize={0}
 							clickable
@@ -198,7 +181,7 @@ class FilesDragDrop extends Component {
 							:
 							<Grid item className={classes.dropFilesWarningGridZone}>
 								<div className='files-list'>
-									Please select files!
+									Please Select files
 								</div>
 							</Grid>
 					}
@@ -206,37 +189,16 @@ class FilesDragDrop extends Component {
 
 				<Grid container spacing={16} justify="center">
 					<Grid item>
-						<Typography>
-							Page Number:
-						</Typography>
-						<form onSubmit={this.handleSubmit}>
-							<label>
-								From :  
-								<input type="text" value={this.state.value1} onChange={this.handleChange} className={classes.inputBox}/>
-							</label>
-
-							<label>
-								To :  
-								<input type="text" value={this.state.value2} onChange={this.handleChangeToPage} className={classes.inputBox}/>
-							</label>
-						</form>
-					</Grid>
-				</Grid>
-
-				<Grid container spacing={16} justify="center">
-					<Grid item>
 						<Button variant="contained" color="primary"
 							disabled={!this.state.hasFiles}
-							className={classes.splitButton}
+							className={classes.mergeButton}
 							onClick={this.startMerge}>
-							SUBMIT
+							   SUBMIT
 						</Button>
 					</Grid>
 					<Grid item>
-						<Button variant="outlined"
-							color="secondary"
-							className={classes.splitButton}
-							onClick={this.filesClearAndRemoveAll}>
+						<Button variant="outlined" color="secondary" onClick={this.filesClearAndRemoveAll} 
+								className={classes.mergeButton}>
 							RESET FILES
 						</Button>
 					</Grid>
@@ -275,17 +237,13 @@ const styles = theme => ({
 		color: 'red',
 		fontWeight: 'bold'
 	},
+
 	gridContainer: {
 		paddingTop: '10px'
 	},
-	splitButton: {
+	mergeButton: {
 		margin: '10px',
 		width: '166px'
-	},
-	inputBox: {
-		width: '40px',
-		bottom: '5px',
-		fontWeight: '400'
 	}
 });
 
