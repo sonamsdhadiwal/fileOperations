@@ -6,9 +6,10 @@ let returnObj = { pdfFile: null, pdfNotMergedList: [] }
     if (pdfFileList.length > 0) {
 		const reader = new FileReader();
 		reader.onload = function(evt) { console.log(evt.target.result); };
+
 		const pdfDoc = PDFDocumentFactory.create();
 		let iterPdfDoc = PDFDocumentFactory.create();
-	
+		// let iterPdfDocBytes;
 		let pdfFilePromiseArrayBufferList = [];
 		let pdfNotMergedList = [];
 		let iterPdfDocPages = [];
@@ -26,10 +27,9 @@ let returnObj = { pdfFile: null, pdfNotMergedList: [] }
 			.all(pdfFilePromiseArrayBufferList)
 			.then((pdfArrayBufferFileList) => {
 				for (let i = 0; i < pdfArrayBufferFileList.length; i++) {
-					console.log(pdfArrayBufferFileList[i])
+					// console.log(pdfArrayBufferFileList[i])
 					// iterPdfDocBytes = reader.readAsArrayBuffer(pdfBlob)
 					try {
-						
 						iterPdfDoc = PDFDocumentFactory.load(new Uint8Array(pdfArrayBufferFileList[i]))
 						iterPdfDocPages = iterPdfDoc.getPages()
 						iterPdfDoc = PDFDocumentFactory.create();
@@ -47,6 +47,7 @@ let returnObj = { pdfFile: null, pdfNotMergedList: [] }
 						pdfNotMergedList.push(pdfFileList[i].name)
 					}
 				}
+
 				returnObj.pdfFile = PDFDocumentWriter.saveToBytes(pdfDoc)
 				returnObj.pdfNotMergedList = pdfNotMergedList
 				return returnObj
